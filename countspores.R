@@ -2,13 +2,15 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) install.packages("BiocMana
 BiocManager::install("EBImage")
 library(EBImage)
 
-# ---- Parameters ---- (make sure to change image_dir to where your images are located)
-image_dir <- "/Users/melaniemadrigal/Desktop/dowell/spore counting/6.39.20"  # Change to your directory
+# Parameters (make sure to change image_dir to where your images are located)
+image_dir <- "/Users/melaniemadrigal/Desktop/dowell/spore\ counting/peter/peter/8.11.25"  # Change to your directory
 image_files <- list.files(image_dir, pattern = "\\.png$", full.names = TRUE)
 
+#count paramaters optimized for Cytation 5
 n_rows <- 5  # Number of rows in the grid
+
 n_cols <- 5  # Number of columns in the grid
-volume_per_square_nl <- 50  # Volume per square microliter (adjust as needed)
+volume_per_square_nl <- 50 
 pixels_per_mm <- 2850  # Pixels per millimeter (for scaling purposes) (obtained from imagej)
 mm_per_square <- 0.2  # Side length of each square in mm (for grid)
 
@@ -66,14 +68,14 @@ for (image_path in image_files) {
       # Extract the sub-image corresponding to the grid box
       sub_img <- labeled[y1:y2, x1:x2]
       
-      # Count the number of connected components (spoors) in the sub-image
+      # Count the number of connected components (spores) in the sub-image
       spore_count <- max(bwlabel(sub_img))  # max of bwlabel gives the number of objects
       box_counts[box_id] <- spore_count  # Store the count for this grid box
       box_id <- box_id + 1
     }
   }
   
-  # ---- Calculate Metrics ----
+  # Calculate Metrics
   average_spores <- mean(box_counts, na.rm = TRUE)  # Average spore count across grid boxes
   concentration_nl <- average_spores / volume_per_square_nl  # Concentration in spores per nanoliter
   concentration_ul <- concentration_nl * 1000  # Convert to spores per microliter
@@ -87,11 +89,16 @@ for (image_path in image_files) {
     stringsAsFactors = FALSE
   ))
   
-  # Display the processed image (after processing each image)
+  # Display the processed image (after processing each image,visual check)
   display(colorLabels(labeled), method = "raster")
 }
 
-# ---- Output Results ----
+#  Output Results
 print(results)
+results$Concentration_Sp_uL
+write.csv(df$Concentration_Sp_uL, "Concentration_Sp_uL.csv", 
+            col.names = FALSE, row.names = FALSE, sep = ",")
+#these results are then inputted into an excel sheet for diluations
+
 
 
