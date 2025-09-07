@@ -14,14 +14,19 @@ This repository houses two core scripts:
 1. **countspores.R**  
    - A folder containing **PNG images** of spores.  
    - The script processes each image, applies filtering and thresholding, then counts spores per grid square.
-   - Outputs a .csv file with spore counts of each sample, which can be used for further dilution. 
+   - Outputs a .csv file with spore counts of each sample, which can be used for further dilution.
+2. **stackgray.py**  
+   - A folder with output images from Cytation5 in the R,G,B channels.
+   - The script stacks images across the three channels.
+   - Outputs folders with stacked images for use in HyPhy.  
 
-2. **HyPhyPipeline.R**  
+3. **HyPhyPipeline.R**  
    - Each subfolder ending in `skeleton_csvs/` must include:  
      - `fileInfo.csv`  
      - `network_points.csv`  
      - `network_lines.csv`  
      - `network_metadata.csv`
+
        
 ## Installation
 To use this repository, clone it by:
