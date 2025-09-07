@@ -16,12 +16,12 @@ except ImportError:
     sys.exit(1)
 
 
-# ---- Config defaults
+#set up where images are
 DEFAULT_ROOT = r"/Volumes/MMMHD/8.11.25/Plates1-8_FinalProtocl_WithDataExport_MM_Nooutput_1/GWAS_CT "
 DEFAULT_PLATES = ["Plate_1", "Plate_2", "Plate_4", "Plate_5", "Plate_6", "Plate_7", "Plate_8"]
 
 
-# ---- Helpers ----
+# helper functions
 def is_tiff(p: Path) -> bool:
     return p.suffix.lower() in {".tif", ".tiff"}
 
@@ -111,7 +111,7 @@ def save_grayscale_stack(ch_paths: dict, out_path: Path, order=("R", "G", "B"), 
         return 0
 
     data = np.stack(planes, axis=0)  # (pages, H, W)
-    # Ensure grayscale; ImageJ=True for nice stack behavior
+    # Ensure grayscale
     tifffile.imwrite(
         str(out_path),
         data,
@@ -141,7 +141,7 @@ def main():
     for plate in args.plates:
         input_dir = root / plate
         if not input_dir.exists():
-            print(f"⚠️  Skipping missing plate folder: {input_dir}")
+            print(f"  Skipping missing plate folder: {input_dir}")
             continue
 
         output_dir = input_dir / "stacked"
@@ -194,9 +194,9 @@ def main():
                 print(f"    Saved grayscale stack ({n_pages} page{'s' if n_pages!=1 else ''}): {group_id}")
                 done += 1
 
-        print(f"📊 Summary for {plate}: {done}/{total_groups} stacks written, {empty} empty groups")
+        print(f" Summary for {plate}: {done}/{total_groups} stacks written, {empty} empty groups")
 
-    print("\n✅ Finished all plates.")
+    print("\n Finished all plates.")
 
 
 if __name__ == "__main__":
