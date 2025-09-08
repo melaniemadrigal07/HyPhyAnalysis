@@ -40,7 +40,7 @@ dir.create("stats", showWarnings = FALSE)
 overall_stats <- tibble()
 meta_traits   <- tibble()
 
-# ------------------ Main loop ---------------
+# Main loop responsible for pulling info from paths
 for (folder in skeleton_folders) {
   cat("Processing:", folder, "\n")
   
@@ -83,7 +83,7 @@ for (folder in skeleton_folders) {
     warning("Missing network_metadata.csv in: ", folder)
   }
   
-  # --- Load & expand lines ---
+  #  Load & expand lines (reconstructing hyphal segments)
   network_lines <- readr::read_csv(lines_path, col_names = FALSE, show_col_types = FALSE)
   if (ncol(network_lines) < 2) { warning("Bad network_lines.csv in: ", folder); next }
   colnames(network_lines)[1:2] <- c("line_id", "pointIndices")
@@ -238,7 +238,7 @@ combo <- meta_summary %>% left_join(hypha_summary, by = c("isolate","tp"))
 
 readr::write_csv(combo, "stats/isolate_tp_summary_fd_lines_clusters_tips_edges_branches.csv")
 
-# ------------------ Quick sanity plots ----------
+# quick quick to ensure plots make sense
 # A) FD vs Tips
 pal <- wes_palette("FantasticFox1", 5)
 ggplot(combo, aes(mean_fd, mean_tips, color = isolate)) +
