@@ -14,7 +14,7 @@ volume_per_square_nl <- 50
 pixels_per_mm <- 2850  # Pixels per millimeter (for scaling purposes) (obtained from imagej)
 mm_per_square <- 0.2  # Side length of each square in mm (for grid)
 
-# ---- Results Container ----
+# store Results
 results <- data.frame(
   Image = character(),
   AverageSpores = numeric(),
@@ -23,7 +23,7 @@ results <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# ---- Loop Over Images ----
+# Loop Over Images 
 for (image_path in image_files) {
   cat("Processing:", basename(image_path), "\n")
   
