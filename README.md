@@ -4,6 +4,7 @@ Post-HyPhy pipeline for extracting and analyzing fungal hyphal network data, whi
 This repository houses two core scripts:
 1. **countspores.R** - Counts spores per image using a fixed grid, then estimates **spores per nL** and **spores per µL**.
 2. **HyPhyPipeline.R** - extracts metadata and network traits from skeletonized images **and plots networks** by connecting points and building edges.
+3. **stackgray.py** - stacks separate R, G, and B grayscale channel outputs into a single multi-layer grayscale image for downstream processing.
 
 
 ## Requirements
